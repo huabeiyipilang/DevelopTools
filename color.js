@@ -4,8 +4,8 @@ function Color() {
     this.mGreen = ["a", "a"];
     this.mBlue = ["c", "c"];
     this.setHexAlpha = function (hexAlpha) {};
-    this.isHexValue = function (num) {
-        if (num.length != 2) {
+    this.isHexValueValid = function (num) {
+        if (num.length !== 2) {
             return false;
         }
 
@@ -29,37 +29,76 @@ function Color() {
 
         return true;
     };
+    this.isDecValueValid = function (num) {
+        if (isNaN(num)) {
+            return false;
+        }
+		
+		if (num < 0 || num > 255) {
+			return false;
+		}
+		
+		return true;
+    };
+	this.dec2hex = function (num) {
+		num = parseInt(num, 10);
+		var res = ""
+		if (num > 0 && num < 16) {
+			res = "0" + num.toString(16);
+		} else {
+			res = num.toString(16);
+		}
+		return res;
+	};
     this.setHexRed = function (red) {
-        if (!this.isHexValue(red)) {
+        if (!this.isHexValueValid(red)) {
             return false;
         }
         this.mRed = red.split("");
         return true;
     };
+    this.setDecRed = function (red) {
+        if (!this.isDecValueValid(red)) {
+            return false;
+        }
+        return this.setHexRed(this.dec2hex(red));
+    };
     this.setHexGreen = function (green) {
-        if (!this.isHexValue(green)) {
+        if (!this.isHexValueValid(green)) {
             return false;
         }
         this.mGreen = green.split("");
         return true;
     };
+    this.setDecGreen = function (green) {
+        if (!this.isDecValueValid(green)) {
+            return false;
+        }
+        return this.setHexGreen(this.dec2hex(green));
+    };
     this.setHexBlue = function (blue) {
-        if (!this.isHexValue(blue)) {
+        if (!this.isHexValueValid(blue)) {
             return false;
         }
         this.mBlue = blue.split("");
         return true;
     };
+    this.setDecBlue = function (blue) {
+        if (!this.isDecValueValid(blue)) {
+            return false;
+        }
+        return this.setHexBlue(this.dec2hex(blue));
+    };
     this.setHexColor = function (color) {
         var indexSharp = color.indexOf("#", 0);
         var colorValue;
-        if (indexSharp == 0) {
+        if (indexSharp === 0) {
             colorValue = color.substring(1);
         } else {
             colorValue = color;
         }
         var res = false;
-        if (colorValue.length == 6) {
+        if (colorValue.length === 6) {
             var red = colorValue.substring(0, 2);
             res = this.setHexRed(red);
             if (!res) {
@@ -85,15 +124,32 @@ function Color() {
     this.getHexR = function () {
         return this.mRed.join("");
     };
+	this.getDecR = function(){
+		return parseInt(this.getHexR(), 16);
+	};
     this.getHexG = function () {
         return this.mGreen.join("");
     };
+	this.getDecG = function(){
+		return parseInt(this.getHexG(), 16);
+	};
     this.getHexB = function () {
         return this.mBlue.join("");
     };
+	this.getDecB = function(){
+		return parseInt(this.getHexB(), 16);
+	}
 }
 
 var currentColor = new Color();
+
+function onLoad() {
+    res = currentColor.setHexColor("#aaddff");
+    if (!res) {
+        alert("Wrong value:" + value);
+    }
+    updateViews();
+}
 
 function updateViews() {
     var colorDisplayView = document.getElementById("color_display");
@@ -112,21 +168,13 @@ function updateViews() {
     b16View.value = currentColor.getHexB();
 
     var r10View = document.getElementById("value_r_10");
-    r10View.value = parseInt(currentColor.getHexR(), 16);
+    r10View.value = currentColor.getDecR();
 
     var g10View = document.getElementById("value_g_10");
-    g10View.value = parseInt(currentColor.getHexG(), 16);
+    g10View.value = currentColor.getDecG();
 
     var b10View = document.getElementById("value_b_10");
-    b10View.value = parseInt(currentColor.getHexB(), 16);
-}
-
-function onLoad() {
-    res = currentColor.setHexColor("#aaddff");
-    if (!res) {
-        alert("Wrong value:" + value);
-    }
-    updateViews();
+    b10View.value = currentColor.getDecB();
 }
 
 function isFullColorHex() {}
@@ -149,30 +197,24 @@ function onValueChanged(view) {
         res = currentColor.setHexRed(value);
         break;
     case "value_r_10":
+		value = view.value;
+		res = currentColor.setDecRed(value);
         break;
     case "value_g_16":
         value = view.value;
         res = currentColor.setHexGreen(value);
         break;
     case "value_g_10":
+		value = view.value;
+		res = currentColor.setDecGreen(value);
         break;
     case "value_b_16":
         value = view.value;
         res = currentColor.setHexBlue(value);
         break;
     case "value_b_10":
-        break;
-    case "":
-        break;
-    case "":
-        break;
-    case "":
-        break;
-    case "":
-        break;
-    case "":
-        break;
-    case "":
+		value = view.value;
+		res = currentColor.setDecBlue(value);
         break;
     }
 
