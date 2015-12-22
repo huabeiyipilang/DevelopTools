@@ -33,23 +33,23 @@ function Color() {
         if (isNaN(num)) {
             return false;
         }
-		
-		if (num < 0 || num > 255) {
-			return false;
-		}
-		
-		return true;
+
+        if (num < 0 || num > 255) {
+            return false;
+        }
+
+        return true;
     };
-	this.dec2hex = function (num) {
-		num = parseInt(num, 10);
-		var res = ""
-		if (num > 0 && num < 16) {
-			res = "0" + num.toString(16);
-		} else {
-			res = num.toString(16);
-		}
-		return res;
-	};
+    this.dec2hex = function (num) {
+        num = parseInt(num, 10);
+        var res = ""
+        if (num >= 0 && num < 16) {
+            res = "0" + num.toString(16);
+        } else {
+            res = num.toString(16);
+        }
+        return res;
+    };
     this.setHexRed = function (red) {
         if (!this.isHexValueValid(red)) {
             return false;
@@ -124,21 +124,21 @@ function Color() {
     this.getHexR = function () {
         return this.mRed.join("");
     };
-	this.getDecR = function(){
-		return parseInt(this.getHexR(), 16);
-	};
+    this.getDecR = function () {
+        return parseInt(this.getHexR(), 16);
+    };
     this.getHexG = function () {
         return this.mGreen.join("");
     };
-	this.getDecG = function(){
-		return parseInt(this.getHexG(), 16);
-	};
+    this.getDecG = function () {
+        return parseInt(this.getHexG(), 16);
+    };
     this.getHexB = function () {
         return this.mBlue.join("");
     };
-	this.getDecB = function(){
-		return parseInt(this.getHexB(), 16);
-	}
+    this.getDecB = function () {
+        return parseInt(this.getHexB(), 16);
+    }
 }
 
 var currentColor = new Color();
@@ -197,24 +197,24 @@ function onValueChanged(view) {
         res = currentColor.setHexRed(value);
         break;
     case "value_r_10":
-		value = view.value;
-		res = currentColor.setDecRed(value);
+        value = view.value;
+        res = currentColor.setDecRed(value);
         break;
     case "value_g_16":
         value = view.value;
         res = currentColor.setHexGreen(value);
         break;
     case "value_g_10":
-		value = view.value;
-		res = currentColor.setDecGreen(value);
+        value = view.value;
+        res = currentColor.setDecGreen(value);
         break;
     case "value_b_16":
         value = view.value;
         res = currentColor.setHexBlue(value);
         break;
     case "value_b_10":
-		value = view.value;
-		res = currentColor.setDecBlue(value);
+        value = view.value;
+        res = currentColor.setDecBlue(value);
         break;
     }
 
