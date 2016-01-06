@@ -5,6 +5,9 @@ function Color() {
     this.mBlue = ["c", "c"];
     this.setHexAlpha = function (hexAlpha) {};
     this.isHexValueValid = function (num) {
+        if (num.length == 1) {
+            num = "0" + num;
+        }
         if (num.length !== 2) {
             return false;
         }
@@ -50,11 +53,17 @@ function Color() {
         }
         return res;
     };
+    this.transHex2Array = function (num) {
+        if (num.length == 1) {
+            num = "0" + num;
+        }
+        return num;
+    };
     this.setHexRed = function (red) {
         if (!this.isHexValueValid(red)) {
             return false;
         }
-        this.mRed = red.split("");
+        this.mRed = this.transHex2Array(red).split("");
         return true;
     };
     this.setDecRed = function (red) {
@@ -67,7 +76,7 @@ function Color() {
         if (!this.isHexValueValid(green)) {
             return false;
         }
-        this.mGreen = green.split("");
+        this.mGreen = this.transHex2Array(green).split("");
         return true;
     };
     this.setDecGreen = function (green) {
@@ -80,7 +89,7 @@ function Color() {
         if (!this.isHexValueValid(blue)) {
             return false;
         }
-        this.mBlue = blue.split("");
+        this.mBlue = this.transHex2Array(blue).split("");
         return true;
     };
     this.setDecBlue = function (blue) {
