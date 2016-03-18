@@ -1,11 +1,26 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/transitional.dtd">
 <html>
 <script src="color.js">
 </script>
 <style>
     .divboard {
+        width: 200px;
+        height: 50px;
+        border: 1px solid #000;
+        background: #E8EAEC;
+        background-image: linear-gradient(45deg, #dddadc 25%, transparent 25%, transparent 75%, #dddadc 75%, #dddadc), linear-gradient(45deg, #dddadc 25%, transparent 25%, transparent 75%, #dddadc 75%, #dddadc);
+        background-size: 10px 10px;
+        background-position: 0 0, 5px 5px;
+    }
+    
+    .colorboard {
         width: 100px;
         height: 20px;
-        border: 1px solid #000
+        border: 1px solid #000;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 15px;
+        filter: alpha(opacity=15);
     }
 </style>
 
@@ -18,9 +33,11 @@
                 <legend>Color Tool</legend>
                 <table>
                     <tr>
-                        <td>Color</td>
                         <td>
-                            <div id="color_display" class="divboard"></div>
+                            <div class="divboard">
+                                <div id="color_display" class="colorboard">
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     <tr>

@@ -1,9 +1,9 @@
 function Color() {
-    this.mAlpha = ["0", "0"];
+    this.mAlpha = ["9", "9"];
     this.mRed = ["f", "f"];
     this.mGreen = ["a", "a"];
     this.mBlue = ["c", "c"];
-    this.setHexAlpha = function (hexAlpha) {};
+    //判断16进制数的有效性
     this.isHexValueValid = function (num) {
         if (num.length == 1) {
             num = "0" + num;
@@ -59,45 +59,82 @@ function Color() {
         }
         return num;
     };
-    this.setHexRed = function (red) {
-        if (!this.isHexValueValid(red)) {
+    //设置透明度 16进制
+    this.setHexAlpha = function (value) {
+        if (!this.isHexValueValid(value)) {
             return false;
         }
-        this.mRed = this.transHex2Array(red).split("");
+        this.mAlpha = this.transHex2Array(value).split("");
         return true;
     };
-    this.setDecRed = function (red) {
-        if (!this.isDecValueValid(red)) {
+    //设置透明度 10进制
+    this.setDecAlpha = function (value) {
+        if (!this.isDecValueValid(value)) {
             return false;
         }
-        return this.setHexRed(this.dec2hex(red));
+        return this.setHexAlpha(this.dec2hex(value));
     };
-    this.setHexGreen = function (green) {
-        if (!this.isHexValueValid(green)) {
+    //设置透明度 百分比
+    this.setAlphaPercent = function (value) {
+        if (isNaN(value)) {
             return false;
         }
-        this.mGreen = this.transHex2Array(green).split("");
+        value = parseInt(value);
+        if (value < 0 || value > 100) {
+            return false;
+        }
+        return this.setDecAlpha(parseInt(value * 255 / 100));
+    };
+    //获取透明度 百分比
+    this.getAlphaPercent = function () {
+        return parseInt(this.getDecA() * 100 / 255);
+    };
+    //设置红色 16进制
+    this.setHexRed = function (value) {
+        if (!this.isHexValueValid(value)) {
+            return false;
+        }
+        this.mRed = this.transHex2Array(value).split("");
         return true;
     };
-    this.setDecGreen = function (green) {
-        if (!this.isDecValueValid(green)) {
+    //设置红色 10进制
+    this.setDecRed = function (value) {
+        if (!this.isDecValueValid(value)) {
             return false;
         }
-        return this.setHexGreen(this.dec2hex(green));
+        return this.setHexRed(this.dec2hex(value));
     };
-    this.setHexBlue = function (blue) {
-        if (!this.isHexValueValid(blue)) {
+    //设置绿色 16进制
+    this.setHexGreen = function (value) {
+        if (!this.isHexValueValid(value)) {
             return false;
         }
-        this.mBlue = this.transHex2Array(blue).split("");
+        this.mGreen = this.transHex2Array(value).split("");
         return true;
     };
-    this.setDecBlue = function (blue) {
-        if (!this.isDecValueValid(blue)) {
+    //设置绿色 10进制
+    this.setDecGreen = function (value) {
+        if (!this.isDecValueValid(value)) {
             return false;
         }
-        return this.setHexBlue(this.dec2hex(blue));
+        return this.setHexGreen(this.dec2hex(value));
     };
+    //设置蓝色 16进制
+    this.setHexBlue = function (value) {
+        if (!this.isHexValueValid(value)) {
+            return false;
+        }
+        this.mBlue = this.transHex2Array(value).split("");
+        return true;
+    };
+    //设置蓝色 10进制
+    this.setDecBlue = function (value) {
+        if (!this.isDecValueValid(value)) {
+            return false;
+        }
+        return this.setHexBlue(this.dec2hex(value));
+    };
+    //设置颜色 16进制
     this.setHexColor = function (color) {
         var indexSharp = color.indexOf("#", 0);
         var colorValue;
@@ -129,6 +166,13 @@ function Color() {
     this.getHexColor = function () {
         var hexColor = "#" + this.mRed.join("") + this.mGreen.join("") + this.mBlue.join("");
         return hexColor;
+    };
+
+    this.getHexA = function () {
+        return this.mAlpha.join("");
+    };
+    this.getDecA = function () {
+        return parseInt(this.getHexA(), 16);
     };
     this.getHexR = function () {
         return this.mRed.join("");
@@ -163,9 +207,19 @@ function onLoad() {
 function updateViews() {
     var colorDisplayView = document.getElementById("color_display");
     colorDisplayView.style.backgroundColor = currentColor.getHexColor();
+    colorDisplayView.style.opacity = currentColor.getDecA() / 255;
 
     var colorView = document.getElementById("value_argb");
     colorView.value = currentColor.getHexColor();
+
+    var a16View = document.getElementById("value_a_16");
+    a16View.value = currentColor.getHexA();
+
+    var a10View = document.getElementById("value_a_10");
+    a10View.value = currentColor.getDecA();
+
+    var aPercentView = document.getElementById("value_a_percent");
+    aPercentView.value = currentColor.getAlphaPercent();
 
     var r16View = document.getElementById("value_r_16");
     r16View.value = currentColor.getHexR();
@@ -200,6 +254,18 @@ function onValueChanged(view) {
     case "value_argb":
         value = view.value;
         res = currentColor.setHexColor(value);
+        break;
+    case "value_a_16":
+        value = view.value;
+        res = currentColor.setHexAlpha(value);
+        break;
+    case "value_a_10":
+        value = view.value;
+        res = currentColor.setDecAlpha(value);
+        break;
+    case "value_a_percent":
+        value = view.value;
+        res = currentColor.setAlphaPercent(value);
         break;
     case "value_r_16":
         value = view.value;
