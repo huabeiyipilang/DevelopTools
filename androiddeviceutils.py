@@ -3,17 +3,20 @@ import sys,os
 import re
 
 class DeviceInfo:
-	def __init__(self, name, width, height, density):
+	def __init__(self, name, width, height, density, navigation_bar):
 		self.name = name
 		self.width = width
 		self.height = height
 		self.density = density
+		self.navigation_bar = navigation_bar
 
 #预置手机
 devices = [
-	DeviceInfo('HTC Desire S', 480, 800, 240),
-	DeviceInfo('HTC Wildfire', 240, 320, 120),
-	DeviceInfo('Sony Xperia Z3', 1080, 1776, 480)
+	DeviceInfo('HTC Desire S', 480, 800, 240, 0),
+	DeviceInfo('HTC Wildfire', 240, 320, 120, 0),
+	DeviceInfo('Sony Xperia Z3', 1080, 1776, 480, 1),
+	DeviceInfo('Galaxy S6', 1440, 1776, 480, 0),
+	DeviceInfo('Galaxy Note Edge', 1600, 2560, 640, 0)
 	]
 
 def log(log):
@@ -84,9 +87,13 @@ def reboot():
 
 #应用机型配置
 def setup_device(device, height_extras = 0):
-	set_size(device.width, int(device.height)+int(height_extras))
+	navigator_height = 0
+	if device.navigation_bar != 0:
+		navigator_height = device.navigation_bar == 1 ? 48 : device.navigation_bar;
+	navigator_height = float(device.density)/float(240)*navigator_height
+	set_size(device.width, int(device.height)+int(height_extras)-navigator_height)
 	set_density(device.density)
-	# reboot()
+	reboot()
 
 
 ############命令开始############
@@ -182,10 +189,11 @@ elif cmd == 'devices':
 				navigator_height = float(device.density)/float(240)*navigator_height
 			setup_device(device, navigator_height)
 	else:
-		print 'Index\tDevice\t\tSize\t\tdensity'
+		#输出设备信息
+		print 'Index\tDevice\t\t\tSize\t\tDensity\t\tNavigationBar'
 		for x in xrange(0, len(devices)):
 			device = devices[x]
-			print x,'\t', devices[x].name, '\t',str(device.width)+'x'+str(device.height), '\t',str(device.density)
+			print x,'\t', devices[x].name, '\t\t',str(device.width)+'x'+str(device.height), '\t',str(device.density), '\t\t',str(device.navigation_bar)
 elif cmd == 'help':
 	print '''
 	1. info                             打印本机信息.
