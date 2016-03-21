@@ -83,7 +83,7 @@ function Color() {
         if (value < 0 || value > 100) {
             return false;
         }
-        return this.setDecAlpha(parseInt(value * 255 / 100));
+        return this.setDecAlpha(Math.ceil(value * 255 / 100));
     };
     //获取透明度 百分比
     this.getAlphaPercent = function () {
@@ -137,7 +137,7 @@ function Color() {
     //设置颜色 16进制
     this.setHexColor = function (color) {
         var indexSharp = color.indexOf("#", 0);
-        var colorValue;
+        var colorValue, alpha, red, green, blue;
         if (indexSharp === 0) {
             colorValue = color.substring(1);
         } else {
@@ -159,11 +159,32 @@ function Color() {
             res = this.setHexBlue(blue);
             return res;
         } else if (colorValue.length == 8) {
-            return true;
+            var alpha = colorValue.substring(0, 2);
+            res = this.setHexAlpha(alpha);
+            if (!res) {
+                return res;
+            }
+            var red = colorValue.substring(2, 4);
+            res = this.setHexRed(red);
+            if (!res) {
+                return res;
+            }
+            var green = colorValue.substring(4, 6);
+            res = this.setHexGreen(green);
+            if (!res) {
+                return res;
+            }
+            var blue = colorValue.substring(6, 8);
+            res = this.setHexBlue(blue);
+            return res;
         }
         return false;
     };
     this.getHexColor = function () {
+        var hexColor = "#" + this.mAlpha.join("") + this.mRed.join("") + this.mGreen.join("") + this.mBlue.join("");
+        return hexColor;
+    };
+    this.getHexColorWithoutAlpha = function () {
         var hexColor = "#" + this.mRed.join("") + this.mGreen.join("") + this.mBlue.join("");
         return hexColor;
     };
@@ -197,7 +218,7 @@ function Color() {
 var currentColor = new Color();
 
 function onLoad() {
-    res = currentColor.setHexColor("#aaddff");
+    res = currentColor.setHexColor("#99aaddff");
     if (!res) {
         alert("Wrong value:" + value);
     }
@@ -206,7 +227,7 @@ function onLoad() {
 
 function updateViews() {
     var colorDisplayView = document.getElementById("color_display");
-    colorDisplayView.style.backgroundColor = currentColor.getHexColor();
+    colorDisplayView.style.backgroundColor = currentColor.getHexColorWithoutAlpha();
     colorDisplayView.style.opacity = currentColor.getDecA() / 255;
 
     var colorView = document.getElementById("value_argb");
