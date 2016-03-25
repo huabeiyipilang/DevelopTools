@@ -62,7 +62,7 @@ def parse_lines(lines, pkg):
 			if is_pkg:
 				print '\n',task_id
 		elif '* Hist #' in line and is_pkg:
-			activity = line[line.rindex('.')+1:line.rindex(' ')]
+			activity = line[line.rindex('.')+1:line.rindex('t')-1]
 			print activity
 	return tasks
 
