@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/transitional.dtd">
 <html>
-<script src="color.js">
-</script>
+<script src="color.js"></script>
+<script src="date.js"></script>
 <style>
     .divboard {
         width: 200px;
@@ -34,71 +34,80 @@
         a.async = 1;
         a.src = g;
         m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
     ga('create', 'UA-75366566-1', 'auto');
     ga('send', 'pageview');
 </script>
 
-<head>Color Tools</head>
+<head>Android Develop Tools</head>
 
-<body onload="onLoad()">
+<body onload="onLoad();onDateLoad()">
+    <br/>
     <div id="color_panel">
-        <form>
-            <fieldset>
-                <legend>Color Tool</legend>
-                <div class="divboard">
-                    <div id="color_display" class="colorboard">
-                    </div>
+        <fieldset>
+            <legend>Color Tool</legend>
+            <div class="divboard">
+                <div id="color_display" class="colorboard">
                 </div>
-                <table>
-                    <tr>
-                        <td>ARGB</td>
-                        <td>
-                            <input type="text" id="value_argb" onchange="onValueChanged(this)" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>A</td>
-                        <td>16进制
-                            <input type="text" id="value_a_16" onchange="onValueChanged(this)" />
-                        </td>
-                        <td>10进制
-                            <input type="text" id="value_a_10" onchange="onValueChanged(this)" />
-                        </td>
-                        <td>透明度
-                            <input type="text" id="value_a_percent" onchange="onValueChanged(this)" />%</td>
-                    </tr>
-                    <tr>
-                        <td>R</td>
-                        <td>16进制
-                            <input type="text" id="value_r_16" onchange="onValueChanged(this)" />
-                        </td>
-                        <td>10进制
-                            <input type="text" id="value_r_10" onchange="onValueChanged(this)" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>G</td>
-                        <td>16进制
-                            <input type="text" id="value_g_16" onchange="onValueChanged(this)" />
-                        </td>
-                        <td>10进制
-                            <input type="text" id="value_g_10" onchange="onValueChanged(this)" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>B</td>
-                        <td>16进制
-                            <input type="text" id="value_b_16" onchange="onValueChanged(this)" />
-                        </td>
-                        <td>10进制
-                            <input type="text" id="value_b_10" onchange="onValueChanged(this)" />
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-        </form>
+            </div>
+            <table>
+                <tr>
+                    <td>ARGB</td>
+                    <td>
+                        <input type="text" id="value_argb" onchange="onValueChanged(this)" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td>16进制
+                        <input type="text" id="value_a_16" onchange="onValueChanged(this)" />
+                    </td>
+                    <td>10进制
+                        <input type="text" id="value_a_10" onchange="onValueChanged(this)" />
+                    </td>
+                    <td>透明度
+                        <input type="text" id="value_a_percent" onchange="onValueChanged(this)" />%</td>
+                </tr>
+                <tr>
+                    <td>R</td>
+                    <td>16进制
+                        <input type="text" id="value_r_16" onchange="onValueChanged(this)" />
+                    </td>
+                    <td>10进制
+                        <input type="text" id="value_r_10" onchange="onValueChanged(this)" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>G</td>
+                    <td>16进制
+                        <input type="text" id="value_g_16" onchange="onValueChanged(this)" />
+                    </td>
+                    <td>10进制
+                        <input type="text" id="value_g_10" onchange="onValueChanged(this)" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                    <td>16进制
+                        <input type="text" id="value_b_16" onchange="onValueChanged(this)" />
+                    </td>
+                    <td>10进制
+                        <input type="text" id="value_b_10" onchange="onValueChanged(this)" />
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <br/>
+    <div id="date_panel">
+        <fieldset>
+            <legend>时间戳工具</legend>
+            <input type="text" id="date_input" onchange="onDateValueChanged(this)" />
+            <div id="date_display">
+                时间日期
+            </div>
+        </fieldset>
     </div>
 </body>
 
