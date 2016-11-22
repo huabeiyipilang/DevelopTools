@@ -145,6 +145,7 @@ function Color() {
         }
         var res = false;
         if (colorValue.length === 6) {
+            this.setHexAlpha('ff')
             var red = colorValue.substring(0, 2);
             res = this.setHexRed(red);
             if (!res) {
