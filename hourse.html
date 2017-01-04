@@ -1,0 +1,30 @@
+<html>
+
+<script>
+    function onTotalChanged(total_view) {
+        var total = total_view.value;
+        var total_value = parseFloat(total);
+
+        var wangqian = total_value * 0.9;
+        var daikuan = wangqian * 0.65;
+        var qishui = wangqian * 0.01;
+        var zhongjiefei = total_value * 0.027;
+        var first_pay = total_value - daikuan + qishui + zhongjiefei;
+
+        var result = "网签：" + wangqian + "</br>" + "贷款：" + daikuan + "</br>" + "契税：" + qishui + "</br>" + "中介费：" + zhongjiefei + "</br>" + "总额：" + first_pay;
+
+        document.getElementById("display").innerHTML = result;
+    }
+</script>
+
+<body>
+    <form>
+        <input type="number" id="total" onchange="onTotalChanged(this)" />
+    </form>
+
+    <p id="display">
+
+    </p>
+</body>
+
+</html>

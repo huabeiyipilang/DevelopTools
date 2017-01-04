@@ -1,0 +1,160 @@
+<html>
+
+<head>
+    <title>Color Metrix</title>
+    <style type="text/css">
+        .value_input {
+            width: 40px;
+            height: 20px;
+        }
+    </style>
+</head>
+
+<body onload="onLoad()">
+    <script>
+        var origin_image = new Image();
+        var current_matrix = [
+                1, 0, 0, 0, 0,
+                0, 1, 0, 0, 0,
+                0, 0, 1, 0, 0,
+                0, 0, 0, 1, 0,
+        ];
+        var valueElementId = [
+            'value0', 'value1', 'value2', 'value3', 'value4',
+            'value5', 'value6', 'value7', 'value8', 'value9',
+            'value10', 'value11', 'value12', 'value13', 'value14',
+            'value15', 'value16', 'value17', 'value18', 'value19'
+        ];
+
+        function selectImage(file) {
+            if (!file.files || !file.files[0]) {
+                return;
+            }
+            var reader = new FileReader();
+            reader.onload = function (evt) {
+                window.origin_image.src = evt.target.result;
+                log(evt.target.result);
+                updateCanvas();
+            }
+            reader.readAsDataURL(file.files[0]);
+        }
+
+        function updateCanvas() {
+            if (window.origin_image.complete) {
+                drawimage();
+            } else {
+                window.origin_image.onload = function () {
+                    drawimage();
+                };
+                window.origin_image.onerror = function () {
+                    window.alert('加载失败，请重试');
+                };
+            };
+        }
+
+        function drawimage() {
+            log('drawimage');
+            var c = document.getElementById("image_canvas");
+            var cxt = c.getContext("2d");
+            cxt.clearRect(0, 0, c.width, c.height);
+            cxt.drawImage(window.origin_image, 0, 0);
+
+            setupColorMatrix(window.current_matrix);
+        }
+
+        function setupColorMatrix(matrix) {
+            var c = document.getElementById("image_canvas");
+            var cxt = c.getContext("2d");
+            var pixels = cxt.getImageData(0, 0, c.width, c.height);
+            pixels = window.colorMatrixFilter(pixels, matrix);
+            cxt.putImageData(pixels, 0, 0, 0, 0, c.width, c.height);
+        }
+
+        function colorMatrixFilter(pixels, m) {
+            var d = pixels.data;
+            for (var i = 0; i < d.length; i += 4) {
+                var r = d[i];
+                var g = d[i + 1];
+                var b = d[i + 2];
+                var a = d[i + 3];
+
+                d[i] = r * m[0] + g * m[1] + b * m[2] + a * m[3] + m[4];
+                d[i + 1] = r * m[5] + g * m[6] + b * m[7] + a * m[8] + m[9];
+                d[i + 2] = r * m[10] + g * m[11] + b * m[12] + a * m[13] + m[14];
+                d[i + 3] = r * m[15] + g * m[16] + b * m[17] + a * m[18] + m[19];
+            }
+            return pixels;
+        };
+
+        function log(msg) {
+            console.log(msg);
+        }
+
+        function onOkClick() {
+            window.current_matrix = readValueFromUI();
+            setupColorMatrix(window.current_matrix);
+            drawimage();
+        }
+
+        function readValueFromUI() {
+            var matrix = [
+                1, 0, 0, 0, 0,
+                0, 1, 0, 0, 0,
+                0, 0, 1, 0, 0,
+                0, 0, 0, 1, 0,
+            ];
+            for (var i = 0; i < matrix.length; i++) {
+                matrix[i] = document.getElementById(valueElementId[i]).value;
+            }
+        }
+
+        function updateValuesUI(matrix) {
+            for (var i = 0; i < matrix.length; i++) {
+                document.getElementById(valueElementId[i]).value = matrix[i];
+            }
+        }
+
+        function onLoad() {
+            updateValuesUI(window.current_matrix);
+        }
+
+        function checkInputIntFloat(oInput) {
+            if ('' != oInput.value.replace(/\d{1,}\.{0,1}\d{0,}/, '')) {
+                oInput.value = oInput.value.match(/\d{1,}\.{0,1}\d{0,}/) == null ? '' : oInput.value.match(/\d{1,}\.{0,1}\d{0,}/);
+            }
+        }
+    </script>
+    <input id="image_button" type="file" onchange="selectImage(this);" />
+    <form>
+        <input id="value0" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <input id="value1" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <input id="value2" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <input id="value3" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <input id="value4" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <br/>
+        <input id="value5" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <input id="value6" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <input id="value7" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <input id="value8" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <input id="value9" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <br/>
+        <input id="value10" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <input id="value11" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <input id="value12" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <input id="value13" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <input id="value14" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <br/>
+        <input id="value15" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <input id="value16" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <input id="value17" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <input id="value18" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <input id="value19" type=text class="value_input" onkeyup="checkInputIntFloat(this);" />
+        <br/>
+        <input type="button" value="OK" onclick="onOkClick();" />
+    </form>
+    <br/>
+    <canvas id="image_canvas" width="300" height="300" />
+    <br/>
+</body>
+
+</html>
