@@ -1,29 +1,42 @@
 <!DOCTYPE html>
-<html >
-    <head>
-        <meta charset="utf-8">
-        <meta content="telephone=no" name="format-detection">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-        <link href="./index.css" rel="stylesheet">
+<html>
 
-    </head>
-    <body>
-        <div class="root" id="root">
-            外层
-            <div class="wrapper" id="wrapper">弹层</div>
-        </div>
-    </body>
-    <script type="text/javascript">
-        window.onload = function(){
-            const root = document.getElementById("root");
-            const wrapper = document.getElementById('wrapper');
-            root.onclick = function(){
-                if( wrapper.style.display === "none"){
-                    wrapper.style.display = "block";
-                }else{
-                    wrapper.style.display = "none";
-                }
+<head>
+    <meta charset="utf-8">
+    <meta content="telephone=no" name="format-detection">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link href="./index.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="root" id="root">
+        <button type="button" onclick="onCloseClick()">Close</button>
+        <div class="wrapper" id="wrapper">弹层</div>
+    </div>
+</body>
+<script type="text/javascript">
+    window.onload = function () {
+        // const root = document.getElementById("root");
+        // const wrapper = document.getElementById('wrapper');
+        // root.onclick = function () {
+        //     if (wrapper.style.display === "none") {
+        //         wrapper.style.display = "block";
+        //     } else {
+        //         wrapper.style.display = "none";
+        //     }
+        // }
+    }
+
+    function onCloseClick() {
+        window.WeiboJSBridgeDataTransfer.transferData(
+            {
+                "scene":"SCENE_MESSAGEQUEUE",
+                "data":["ewogICAgImFjdGlvbiI6ICJjbG9zZVZpZGVvRGV0YWlsV2ViVmlldyIsCiAgICAiX19tc2dfdHlwZSI6ICJjYWxsIiwKICAgICJfX2NhbGxiYWNrX2lkIjogIjEyMyIsCiAgICAicGFyYW1zIjogewogICAgICAgICJ0eXBlIjogInBheSIsCiAgICAgICAgInJlc3VsdCI6IDEsCiAgICAgICAgInRvYXN0IjogIua1i+ivleeCueWHuyIKICAgIH0KfQ=="]
             }
-        }
-    </script>
+        );
+    }
+</script>
+
 </html>
