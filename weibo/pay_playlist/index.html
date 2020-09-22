@@ -12,25 +12,11 @@
 
 <body>
     <div class="root" id="root">
-        <button type="button" onclick="onCloseClick()">Close</button>
         <div class="wrapper" id="wrapper">弹层</div>
     </div>
 </body>
 <script type="text/javascript">
     window.onload = function () {
-        // const root = document.getElementById("root");
-        // const wrapper = document.getElementById('wrapper');
-        // root.onclick = function () {
-        //     if (wrapper.style.display === "none") {
-        //         wrapper.style.display = "block";
-        //     } else {
-        //         wrapper.style.display = "none";
-        //     }
-        // }
-    }
-
-    function onCloseClick() {
-
         var dataObj = [
             {
                 "action": "closeVideoDetailWebView",
@@ -52,6 +38,7 @@
         console.log(JSON.stringify(data));
         window.WeiboJSBridgeDataTransfer.transferData(JSON.stringify(data));
     }
+
 </script>
 
 </html>
