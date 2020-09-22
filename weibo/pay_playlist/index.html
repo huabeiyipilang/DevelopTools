@@ -30,9 +30,27 @@
     }
 
     function onCloseClick() {
-        var data = "{\"scene\":\"SCENE_MESSAGEQUEUE\",\"data\":\"WwogIHsKICAgICJhY3Rpb24iOiAiY2xvc2VWaWRlb0RldGFpbFdlYlZpZXciLAogICAgIl9fbXNnX3R5cGUiOiAiY2FsbCIsCiAgICAiX19jYWxsYmFja19pZCI6ICIxMjMiLAogICAgInBhcmFtcyI6IHsKICAgICAgInR5cGUiOiAicGF5IiwKICAgICAgInJlc3VsdCI6IDEsCiAgICAgICJ0b2FzdCI6ICLmtYvor5Xngrnlh7siCiAgICB9CiAgfQpd\"}";
-        console.log(data);
-        window.WeiboJSBridgeDataTransfer.transferData(data);
+
+        var dataObj = [
+            {
+                "action": "closeVideoDetailWebView",
+                "__msg_type": "call",
+                "__callback_id": "123",
+                "params": {
+                    "type": "pay",
+                    "result": 1,
+                    "toast": "测试点击"
+                }
+            }
+        ]
+
+        var data = {
+            "scene": "SCENE_MESSAGEQUEUE",
+            "data": JSON.stringify(dataObj)
+        };
+
+        console.log(JSON.stringify(data));
+        window.WeiboJSBridgeDataTransfer.transferData(JSON.stringify(data));
     }
 </script>
 
