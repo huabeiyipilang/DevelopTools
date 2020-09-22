@@ -30,9 +30,9 @@
     }
 
     function onCloseClick() {
-        window.WeiboJSBridgeDataTransfer.transferData(
-            "{\"scene\":\"SCENE_MESSAGEQUEUE\",\"data\":[\"ewogICAgImFjdGlvbiI6ICJjbG9zZVZpZGVvRGV0YWlsV2ViVmlldyIsCiAgICAiX19tc2dfdHlwZSI6ICJjYWxsIiwKICAgICJfX2NhbGxiYWNrX2lkIjogIjEyMyIsCiAgICAicGFyYW1zIjogewogICAgICAgICJ0eXBlIjogInBheSIsCiAgICAgICAgInJlc3VsdCI6IDEsCiAgICAgICAgInRvYXN0IjogIua1i+ivleeCueWHuyIKICAgIH0KfQ==\"]}"
-        );
+        var data = "{\"scene\":\"SCENE_MESSAGEQUEUE\",\"data\":[\"ewogICAgImFjdGlvbiI6ICJjbG9zZVZpZGVvRGV0YWlsV2ViVmlldyIsCiAgICAiX19tc2dfdHlwZSI6ICJjYWxsIiwKICAgICJfX2NhbGxiYWNrX2lkIjogIjEyMyIsCiAgICAicGFyYW1zIjogewogICAgICAgICJ0eXBlIjogInBheSIsCiAgICAgICAgInJlc3VsdCI6IDEsCiAgICAgICAgInRvYXN0IjogIua1i+ivleeCueWHuyIKICAgIH0KfQ==\"]}";
+        console.log(data);
+        window.WeiboJSBridgeDataTransfer.transferData(data);
     }
 </script>
 
