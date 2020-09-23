@@ -3,6 +3,9 @@
 
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
     <meta content="telephone=no" name="format-detection">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -12,19 +15,26 @@
 
 <body>
     <div class="root" id="root">
-        <div class="wrapper" id="wrapper">弹层</div>
+
+        <button type="button" onclick="closeWebView('pay', 0, '')">关闭弹层</button>
+        <div class="wrapper" id="wrapper">
+
+            <button type="button" onclick="closeWebView('pay', 1, '支付成功')">支付成功</button>
+
+            <button type="button" onclick="closeWebView('pay', 0, '支付失败')">支付失败</button>
+        </div>
     </div>
 </body>
 <script type="text/javascript">
-    window.onload = function () {
+    function closeWebView(type, result, toast) {
         var dataObj = [
             {
                 "action": "closeVideoDetailWebView",
                 "__msg_type": "call",
                 "params": {
-                    "type": "pay",
-                    "result": 1,
-                    "toast": "测试点击"
+                    "type": type,
+                    "result": result,
+                    "toast": toast
                 }
             }
         ]
