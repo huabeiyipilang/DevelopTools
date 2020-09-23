@@ -16,20 +16,25 @@
 <body>
     <div class="root" id="root">
 
-        <button type="button" onclick="closeWebView('pay', 0, '')">关闭弹层</button>
         <div class="wrapper" id="wrapper">
-
-            <button type="button" onclick="closeWebView('pay', 1, '支付成功')">支付成功</button>
-
-            <button type="button" onclick="closeWebView('pay', 0, '支付失败')">支付失败</button>
+            <button type="button" onclick="videoDetailCallback('close', 0, '')">关闭弹层</button>
+            <br><br>
+            <button type="button" onclick="videoDetailCallback('pay', 1, '支付成功')">支付成功</button>
+            <br><br>
+            <button type="button" onclick="videoDetailCallback('pay', 0, '支付失败')">支付失败</button>
+            <br><br>
+            <button type="button" onclick="videoDetailCallback('coupon', 1, '领券成功')">领券成功</button>
+            <br><br>
+            <button type="button" onclick="videoDetailCallback('coupon', 0, '领券失败')">领券失败</button>
+            <br><br>
         </div>
     </div>
 </body>
 <script type="text/javascript">
-    function closeWebView(type, result, toast) {
+    function videoDetailCallback(type, result, toast) {
         var dataObj = [
             {
-                "action": "closeVideoDetailWebView",
+                "action": "videoDetailWebViewCallback",
                 "__msg_type": "call",
                 "params": {
                     "type": type,
